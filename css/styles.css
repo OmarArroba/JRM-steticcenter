@@ -487,6 +487,7 @@ button {
 }
 
 .carousel__btn {
+    display: none;
     position: absolute;
     top: 1rem;
     z-index: 20;
@@ -495,11 +496,16 @@ button {
     border-radius: 50%;
     background-color: var(--clr-white);
     color: var(--clr-primary);
-    display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: all var(--transition-fast);
+}
+
+@media (min-width: 768px) {
+    .carousel__btn {
+        display: flex;
+    }
 }
 
 .carousel__btn:hover {
@@ -642,21 +648,21 @@ button {
 @media (min-width: 768px) {
     .carousel__dots {
         position: absolute;
-        bottom: 2rem;
+        bottom: 1.25rem;
         right: 2rem;
         width: 50%;
         padding: 0;
     }
     
     .carousel__info {
-        padding-bottom: 5rem;
+        padding-bottom: 5.5rem;
     }
 }
 
 @media (min-width: 1024px) {
     .carousel__dots {
         right: 3rem;
-        bottom: 3rem;
+        bottom: 1.5rem;
     }
 }
 

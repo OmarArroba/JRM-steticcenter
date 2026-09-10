@@ -173,6 +173,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (carouselSection) {
             carouselSection.addEventListener('mouseenter', () => { isPaused = true; });
             carouselSection.addEventListener('mouseleave', () => { isPaused = false; });
+            
+            // Swipe logic for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            carouselSection.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+                isPaused = true; // pause while swiping
+            }, { passive: true });
+
+            carouselSection.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                isPaused = false;
+                handleSwipe();
+            }, { passive: true });
+
+            const handleSwipe = () => {
+                const minSwipeDistance = 50;
+                if (touchEndX < touchStartX - minSwipeDistance) {
+                    nextSlide();
+                } else if (touchEndX > touchStartX + minSwipeDistance) {
+                    prevSlide();
+                }
+            };
         }
 
         // Init
