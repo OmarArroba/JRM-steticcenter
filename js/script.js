@@ -154,25 +154,30 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCarousel();
         };
 
-        // Event Listeners for arrows
-        if (btnNext) btnNext.addEventListener('click', nextSlide);
-        if (btnPrev) btnPrev.addEventListener('click', prevSlide);
-
         // Autoplay logic
         const startAutoplay = () => {
             autoplayInterval = setInterval(() => {
                 if (!isPaused) nextSlide();
-            }, 4000);
+            }, 5000);
         };
 
         const stopAutoplay = () => {
             clearInterval(autoplayInterval);
         };
 
+        const resetTimer = () => {
+            stopAutoplay();
+            startAutoplay();
+        };
+
+        // Event Listeners for arrows
+        if (btnNext) btnNext.addEventListener('click', () => { nextSlide(); resetTimer(); });
+        if (btnPrev) btnPrev.addEventListener('click', () => { prevSlide(); resetTimer(); });
+
         // Pause on hover
         if (carouselSection) {
             carouselSection.addEventListener('mouseenter', () => { isPaused = true; });
-            carouselSection.addEventListener('mouseleave', () => { isPaused = false; });
+            carouselSection.addEventListener('mouseleave', () => { isPaused = false; resetTimer(); });
             
             // Swipe logic for mobile
             let touchStartX = 0;
@@ -193,8 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const minSwipeDistance = 50;
                 if (touchEndX < touchStartX - minSwipeDistance) {
                     nextSlide();
+                    resetTimer();
                 } else if (touchEndX > touchStartX + minSwipeDistance) {
                     prevSlide();
+                    resetTimer();
                 }
             };
         }
